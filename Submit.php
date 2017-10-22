@@ -92,6 +92,7 @@ $email = $phone = "";
    <input type="hidden" name="MAX_FILE_SIZE" value="3000000" />
     Add this Image file: <input name="userfile" type="file" />
     <br><br>
+  
     <input type="submit" name="submit" value="Submit">
   </form>
 

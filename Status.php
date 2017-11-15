@@ -6,6 +6,8 @@ session_start();
 // of $_FILES.
 
 echo $_POST['email'];
+echo $_POST['phone'];
+echo $_POST['userfile'];
 
 $uploaddir = '/tmp/';
 $uploadfile = $uploaddir . basename($_FILES['userfile']['name']);

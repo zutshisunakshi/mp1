@@ -19,6 +19,15 @@ function check(o) {
         o.value=o.value.substr(0,o.value.length-1).replace(/^\s+|\s+$/,'');
     }
 }
+
+$('#email').on('keypress', function() {
+    var re = /([A-Z0-9a-z_-][^@])+?@[^$#<>?]+?\.[\w]{2,4}/.test(this.value);
+    if(!re) {
+        $('#error').show();
+    } else {
+        $('#error').hide();
+    }
+})
 </script>
 </head>
 <body>
@@ -27,7 +36,8 @@ function check(o) {
   <h2 align="center">Add image to your bucket form</h2>
   <p><span class="error">All are required fields</span></p>
   <form enctype="multipart/form-data" action="Status.php" method="POST">
-    <div>  Email ID <input type="text" name="email" placeholder="Enter email..."></div>
+    <div>  Email ID <input id="email" type="text" name="email" placeholder="Enter email..."></div>
+    <span id="error" style="display:none;color:red;">Invalid email!</span>
       <br><br>
     <div>  Cell no. <input type="text" maxlength="10" onkeyup="check(this)" name="phone" placeholder="Enter phone no..."></div>
       <br><br>

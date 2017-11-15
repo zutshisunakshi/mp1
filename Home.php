@@ -1,16 +1,15 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<title>Home Page Portal : Image manupulation to b/w</title>
+<title>Home Page Portal : Image manupulation App with AWS</title>
 </head>
 
 <body>
-  <h1 align="center">Add image to your bucket: Click below to begin</h1>
-    <h2 align="center">ITMO544 - MP1</h2>
+  <h1 align="center">ITMO544 - MP1 : Click Link below to start</h1>
+  <hr>
+  <h2 align="center"><a href="Submit.php">Proceed to Submit Images</a></h2>
 
-  <h3 align="center"><a href="Submit.php">Click to submit image</a></h3>
-
-  <img src="background.jpg" alt="Gallery background animated" width="800" height="600" />
+  <img src="background.jpg" alt="Gallery background animated" width="1525" height="500" />
 
 </body>
 </html>

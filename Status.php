@@ -1,12 +1,19 @@
 <?php
 // Start the session
 session_start();
+echo "<h2>Your Input:</h2>";
+echo "Email ID : "$_POST["email"];
+echo "Cell no. : "$_POST["phone"];
+echo "File Uploaded : "$_POST["userfile"];
+
+
+require 'vendor/autoload.php';
+$s3 = new Aws\S3\S3Client([
+    'version' => 'latest',
+    'region'  => 'us-west-2a'
+]);
 // In PHP versions earlier than 4.1.0, $HTTP_POST_FILES should be used instead
 // of $_FILES.
-echo "<h2>Your Input:</h2>";
-echo $_POST['email'];
-echo $_POST['phone'];
-echo $_POST['userfile'];
 
 $uploaddir = '/tmp/';
 $uploadfile = $uploaddir . basename($_FILES['userfile']['name']);
@@ -17,98 +24,68 @@ if (move_uploaded_file($_FILES['userfile']['tmp_name'], $uploadfile)) {
 } else {
     echo "Possible file upload attack!\n";
 }
-
-echo 'Here is some more debugging info:';
+echo 'File upload details:';
 print_r($_FILES);
 
-print "</pre>";
-require 'vendor/autoload.php';
-use Aws\S3\S3Client;
-
-$client = S3Client::factory();
-$bucket = uniqid("php-sz-",false);
-
-$result = $client->createBucket(array(
-    'Bucket' => $bucket
-));
-
-
-$client->waitUntilBucketExists(array('Bucket' => $bucket));
-$key = $uploadfile;
-$result = $client->putObject(array(
+// Retrieve URL of uploaded files
+$s3result = $s3->putObject([
     'ACL' => 'public-read',
-    'Bucket' => $bucket,
-    'Key' => $key,
+    'Bucket' => 'raw-vip',
+    'Key' =>  basename($_FILES['userfile']['name']),
     'SourceFile' => $uploadfile
-));
-$url = $result['ObjectURL'];
-echo $url;
+]);
+$url=$s3result['ObjectURL'];
+echo "</br>";
+echo "\n". "Hey! Your S3 Image URL: " . $url ."\n"; echo "</br>";
 
-use Aws\Rds\RdsClient;
-$client = RdsClient::factory(array(
-'region'  => 'us-west-2'
-));
+//Insert the obtained user details from Submit page to DB
+$rdsclient = new Aws\Rds\RdsClient([
+  'region' => 'us-west-2a',
+  'version' => 'latest'
+]);
+$rdsresult = $rdsclient->describeDBInstances([
+    'DBInstanceIdentifier' => 'sz-itmo544'
+]);
+$endpoint = $rdsresult['DBInstances'][0]['Endpoint']['Address'];
 
-$result = $client->describeDBInstances(array(
-    'DBInstanceIdentifier' => 'sz-ITMO544',
-));
-
-$endpoint = "";
-
-foreach ($result->getPath('DBInstances/*/Endpoint/Address') as $ep) {
-    // Do something with the message
-    echo "============". $ep . "================";
-    $endpoint = $ep;
-}
-//echo "begin database";
-$link = mysqli_connect($endpoint,"poweruser","zaq12wsx","customers") or die("Error " . mysqli_error($link));
-
-/* check connection */
+$link = mysqli_connect($endpoint,"poweruser","zaq12wsx","customers", 3306) or die("Error " . mysqli_error($link));
+/* check db connection */
 if (mysqli_connect_errno()) {
     printf("Connect failed: %s\n", mysqli_connect_error());
     exit();
 }
-
-
-/* Prepared statement, stage 1: prepare */
-if (!($stmt = $link->prepare("INSERT INTO sz-customers (email,phone,s3rawurl,s3finishedurl,status,reciept) VALUES (?,?,?,?,?,?)"))) {
-    echo "Prepare failed: (" . $link->errno . ") " . $link->error;
+echo "</br>";
+if (!($stmt = $link->prepare("INSERT INTO customers(id, email, phone, s3rawurl, s3finishedurl,status, receipt) VALUES (NULL, ?,?,?,?,?,?)"))) {
+    echo "Prepare failed: (" . $stmt->errno . ") " . $stmt->error; echo "</br>";
 }
-
-$email = $_POST['email'];
-$phone = $_POST['phone'];
-$s3rawurl = $url; //  $result['ObjectURL']; from above
-//$filename = basename($_FILES['userfile']['name']);
-$s3finishedurl = "none";
-$status =0;
-$reciept=0;
-
-$stmt->bind_param("sssssii",$email,$phone,$s3rawurl,$s3finishedurl,$status,$reciept);
-
+//store the data into variables
+$email=$_POST["email"];
+$phone=$_POST["phone"];
+$finishedurl=' ';
+$status=0;
+$receipt=md5($url);
+// prepared statement to bind the data to insert to DB
+$stmt->bind_param("sz01",$email,$phone,$url,$finishedurl, $status,$receipt);
 if (!$stmt->execute()) {
     echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
 }
-
-printf("%d Row inserted.\n", $stmt->affected_rows);
-
-/* explicit close recommended */
+printf("%d Result for row inserted :\n", $stmt->affected_rows);
+echo "</br>";
 $stmt->close();
 
-$link->real_query("SELECT * FROM sz-customers");
-$res = $link->use_result();
-
-echo "Result set order...\n";
-while ($row = $res->fetch_assoc()) {
-    echo $row['id'] . " " . $row['email']. " " . $row['phone'];
-}
-
-
-$link->close();
-
-//add code to detect if subscribed to SNS topic
-//if not subscribed then subscribe the user and UPDATE the column in the database with a new value 0 to 1 so that then each time you don't have to resubscribe them
-
-// add code to generate SQS Message with a value of the ID returned from the most recent inserted piece of work
-//  Add code to update database to UPDATE status column to 1 (in progress)
 
 ?>
+
+
+
+<html>
+<head><title>Customer Portal : Status Image manupulation to b/w</title>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.4/css/bootstrap.min.css">
+</head>
+<body>
+   <h2 align="center"><a href="Submit.php">Back to Submit Images</a></h2>
+
+   <img src="Status-page.png" alt="Status background animated" width="1525" height="500" />
+</body>
+</html>

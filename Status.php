@@ -1,13 +1,17 @@
-
 <?php
 // Start the session
 session_start();
 // In PHP versions earlier than 4.1.0, $HTTP_POST_FILES should be used instead
 // of $_FILES.
 
-echo $_POST['email'];
-echo $_POST['phone'];
-echo $_POST['userfile'];
+echo "<h2>Your Inputs:</h2>";
+echo $email;
+echo "<br>";
+echo $phone;
+echo "<br>";
+echo $userfile;
+echo "<br>";
+<hr>
 
 $uploaddir = '/tmp/';
 $uploadfile = $uploaddir . basename($_FILES['userfile']['name']);

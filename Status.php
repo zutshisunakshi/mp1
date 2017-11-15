@@ -1,19 +1,12 @@
 <?php
-echo "<h2>Your Inputs:</h2>";
-echo $_POST["email"];
-echo "<br>";
-echo $_POST["phone];
-echo "<br>";
-echo $_POST["userfile];
-echo "<br>";
-
-?>
-
-<?php
 // Start the session
 session_start();
 // In PHP versions earlier than 4.1.0, $HTTP_POST_FILES should be used instead
 // of $_FILES.
+echo "<h2>Your Input:</h2>";
+echo $_POST['email'];
+echo $_POST['phone'];
+echo $_POST['userfile'];
 
 $uploaddir = '/tmp/';
 $uploadfile = $uploaddir . basename($_FILES['userfile']['name']);

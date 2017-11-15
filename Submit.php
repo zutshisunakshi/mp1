@@ -8,6 +8,18 @@
 <style>
  .error {color: #FF0000;}
 </style>
+<script>
+function check(o) {
+    v=o.value.replace(/^\s+|\s+$/,''); // remove any whitespace
+    if(o=='') {
+        return;
+    }
+    v=v.substr(v.length-1);
+    if(v.match(/\d/g)==null) {
+        o.value=o.value.substr(0,o.value.length-1).replace(/^\s+|\s+$/,'');
+    }
+}
+</script>
 </head>
 <body>
 
@@ -15,14 +27,13 @@
   <h2 align="center">Add image to your bucket form</h2>
   <p><span class="error">All are required fields</span></p>
   <form enctype="multipart/form-data" action="Status.php" method="POST">
-      Email ID <input type="text" name="email" placeholder="Enter email...">
+    <div>  Email ID <input type="text" name="email" placeholder="Enter email..."></div>
       <br><br>
-      Cell no. <input type="text" name="phone" placeholder="Enter phone no...">
+    <div>  Cell no. <input type="text" maxlength="10" onkeyup="check(this)" name="phone" placeholder="Enter phone no..."></div>
       <br><br>
-      <input name="userfile" type="file" />
+    <div>  <input name="userfile" type="file" /></div>
       <br><br>
-      <input class="btn btn-success btn-send" type="submit" name="submit" value="Submit">
-  </form>
+    <div>  <input class="btn btn-success btn-send" type="submit" name="submit" value="Submit"></div>
 </div>
 
   <hr>
@@ -36,7 +47,7 @@
   </form>
 </div>
 
-
+<script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </body>
 </html>

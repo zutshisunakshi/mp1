@@ -15,23 +15,26 @@
   <h2 align="center">Add image to your bucket form</h2>
   <p><span class="error">All are required fields</span></p>
   <form enctype="multipart/form-data" action="Status.php" method="POST">
-      E-mail: <input type="text" name="email" placeholder="Please enter your email *">
+      Email ID <input type="text" name="email" placeholder="Enter email...">
       <br><br>
-      Cellno.: <input type="text" name="phone" placeholder="Please enter your phone no. *">
+      Cell no. <input type="text" name="phone" placeholder="Enter phone no...">
       <br><br>
-      Add this Image file: <input name="userfile" type="file" />
+      <input name="userfile" type="file" />
       <br><br>
       <input class="btn btn-success btn-send" type="submit" name="submit" value="Submit">
   </form>
 </div>
 
-  <hr />
+  <hr>
+
+<div class="container">
   <!-- The data encoding type, enctype, MUST be specified as below -->
   <form enctype="multipart/form-data" action="Gallery.php" method="POST">
 
   View your uploads: <input type="email" name="email">
   <input class="btn btn-success btn-send" type="submit" value="View Gallery" />
   </form>
+</div>
 
 
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>

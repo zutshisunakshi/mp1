@@ -20,14 +20,17 @@ function check(o) {
     }
 }
 
-$('#email').on('keypress', function() {
-    var re = /([A-Z0-9a-z_-][^@])+?@[^$#<>?]+?\.[\w]{2,4}/.test(this.value);
-    if(!re) {
-        $('#error').show();
-    } else {
-        $('#error').hide();
-    }
-})
+function checkEmail() {
+
+    var email = document.getElementById('Email');
+    var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+
+    if (!filter.test(email.value)) {
+    alert('Please provide a valid email address');
+    email.focus;
+    return false;
+ }
+}
 </script>
 </head>
 <body>
@@ -36,14 +39,13 @@ $('#email').on('keypress', function() {
   <h2 align="center">Add image to your bucket form</h2>
   <p><span class="error">All are required fields</span></p>
   <form enctype="multipart/form-data" action="Status.php" method="POST">
-    <div>  Email ID <input id="email" type="text" name="email" placeholder="Enter email..."></div>
-    <span id="error" style="display:none;color:red;">Invalid email!</span>
+    <div>  Email ID <input id="Email" type="text" name="email" placeholder="Enter email..."></div>
       <br><br>
     <div>  Cell no. <input type="text" maxlength="10" onkeyup="check(this)" name="phone" placeholder="Enter phone no..."></div>
       <br><br>
     <div>  <input name="userfile" type="file" /></div>
       <br><br>
-    <div>  <input class="btn btn-success btn-send" type="submit" name="submit" value="Submit"></div>
+    <div>  <input class="btn btn-success btn-send" type="submit" name="submit" value="Submit" onclick='Javascript:checkEmail();'></div>
 </div>
 
   <hr>
@@ -52,8 +54,8 @@ $('#email').on('keypress', function() {
   <!-- The data encoding type, enctype, MUST be specified as below -->
   <form enctype="multipart/form-data" action="Gallery.php" method="POST">
 
-  View your uploads: <input type="email" name="email">
-  <input class="btn btn-success btn-send" type="submit" value="View Gallery" />
+  View your uploads: <input id="Email" type="email" name="email">
+  <input class="btn btn-success btn-send" type="submit" value="View Gallery" onclick='Javascript:checkEmail();'/>
   </form>
 </div>
 

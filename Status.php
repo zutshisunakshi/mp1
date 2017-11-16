@@ -2,19 +2,12 @@
 // Start the session
 session_start();
 echo "<h2>Your Input:</h2>";
-echo "Email ID : "$_POST["email"];
-echo "Cell no. : "$_POST["phone"];
-echo "File Uploaded : "$_POST["userfile"];
-
-
-require 'vendor/autoload.php';
-$s3 = new Aws\S3\S3Client([
-    'version' => 'latest',
-    'region'  => 'us-west-2a'
-]);
-// In PHP versions earlier than 4.1.0, $HTTP_POST_FILES should be used instead
-// of $_FILES.
-
+echo "Email ID : ".$_POST['email'];
+echo "\n";
+echo "Cell no. : ".$_POST['phone'];
+echo "\n";
+echo "File Uploaded : ".$_POST['userfile'];
+echo "\n";
 $uploaddir = '/tmp/';
 $uploadfile = $uploaddir . basename($_FILES['userfile']['name']);
 
@@ -26,6 +19,12 @@ if (move_uploaded_file($_FILES['userfile']['tmp_name'], $uploadfile)) {
 }
 echo 'File upload details:';
 print_r($_FILES);
+
+require 'vendor/autoload.php';
+$s3 = new Aws\S3\S3Client([
+    'version' => 'latest',
+    'region'  => 'us-west-2a'
+]);
 
 // Retrieve URL of uploaded files
 $s3result = $s3->putObject([

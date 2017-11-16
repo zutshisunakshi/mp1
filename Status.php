@@ -16,7 +16,7 @@
 <?php
 // Start the session
 session_start();
-if (isset($_POST['submit'])) {
+
 
 echo "<h3>Your Inputs:</h3>";
 echo "Email ID : ".$_POST['txtEmail'];
@@ -33,7 +33,7 @@ if (move_uploaded_file($_FILES['userfile']['tmp_name'], $uploadfile)) {
     echo "Possible file upload attack!\n";
 }
 print_r($_FILES);
-}
+
 require 'vendor/autoload.php';
 $s3 = new Aws\S3\S3Client([
     'version' => 'latest',

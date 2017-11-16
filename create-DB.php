@@ -16,7 +16,7 @@ if (mysqli_connect_errno()) {
     printf("Connect failed: %s\n", mysqli_connect_error());
     exit();
 }
-$create_table = 'CREATE TABLE IF NOT EXISTS sz-customers
+$create_table = 'CREATE TABLE IF NOT EXISTS customers
 (
 id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 email VARCHAR(32),

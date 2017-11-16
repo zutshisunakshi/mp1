@@ -1,12 +1,26 @@
+<!DOCTYPE HTML>
+<html>
+<head><title>Customer Portal : Status Image manupulation to b/w</title>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.4/css/bootstrap.min.css">
+</head>
+<body>
+  <div class="container">
+   <h2 align="center"><a href="Submit.php">Back to Submit Images</a></h2>
+
+   <img src="Status-page.png" alt="Status background animated" width="1525" height="500" />
+ </div>
+ <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+</body>
+</html>
+
 <?php
 // Start the session
 session_start();
-echo "<h2>Your Input:</h2>";
-echo "Email ID : ".$_POST['email'];
-echo "\n";
-echo "Cell no. : ".$_POST['phone'];
-echo "\n";
-echo "File Uploaded : ".$_POST['userfile'];
+echo "<h3>Your Input:</h3>";
+echo "Email ID : ".$_POST['email']."\n";
+echo "Cell no. : ".$_POST['phone']"\n";
+echo "File Uploaded : ".$_POST['userfile']"\n";
 echo "\n";
 $uploaddir = '/tmp/';
 $uploadfile = $uploaddir . basename($_FILES['userfile']['name']);
@@ -74,17 +88,3 @@ $stmt->close();
 
 
 ?>
-
-
-
-<html>
-<head><title>Customer Portal : Status Image manupulation to b/w</title>
-  <meta charset="UTF-8">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.4/css/bootstrap.min.css">
-</head>
-<body>
-   <h2 align="center"><a href="Submit.php">Back to Submit Images</a></h2>
-
-   <img src="Status-page.png" alt="Status background animated" width="1525" height="500" />
-</body>
-</html>

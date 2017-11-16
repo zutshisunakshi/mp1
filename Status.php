@@ -19,8 +19,8 @@
 session_start();
 echo "<h3>Your Input:</h3>";
 echo "Email ID : ".$_POST['email']."\n";
-echo "Cell no. : ".$_POST['phone']"\n";
-echo "File Uploaded : ".$_POST['userfile']"\n";
+echo "Cell no. : ".$_POST['phone']."\n";
+echo "File Uploaded : ".$_POST['userfile']."\n";
 echo "\n";
 $uploaddir = '/tmp/';
 $uploadfile = $uploaddir . basename($_FILES['userfile']['name']);

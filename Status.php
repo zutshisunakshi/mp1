@@ -8,7 +8,7 @@
   <div class="container">
    <h2 align="center"><a href="Submit.php">Back to Submit Images</a></h2>
 
-   <img src="Status-page.png" alt="Status background animated" width="800" height="500" />
+   <div align="center"><img src="Status-page.png" alt="Status background animated" width="800" height="500" /></div>
  </div>
 </body>
 </html>
@@ -16,11 +16,20 @@
 <?php
 // Start the session
 session_start();
+
+require 'vendor/autoload.php';
+$s3 = new Aws\S3\S3Client([
+    'version' => 'latest',
+    'region'  => 'us-west-2a'
+]);
+
 echo "<h3>Your Input:</h3>";
-echo "Email ID : ".$_POST['email']."\n";
-echo "Cell no. : ".$_POST['phone']."\n";
-echo "File Uploaded : ".$_POST['userfile']."\n";
-echo "\n";
+echo "Email ID : ".$_POST['txtEmail'];
+echo "<br />\n";
+echo "Cell no. : ".$_POST['phone'];
+echo "<br />\n";
+echo "File Uploaded : ".$_POST['userfile'];
+echo "<br />\n";
 $uploaddir = '/tmp/';
 $uploadfile = $uploaddir . basename($_FILES['userfile']['name']);
 
@@ -30,25 +39,18 @@ if (move_uploaded_file($_FILES['userfile']['tmp_name'], $uploadfile)) {
 } else {
     echo "Possible file upload attack!\n";
 }
-echo 'File upload details:';
-print_r($_FILES);
 
-require 'vendor/autoload.php';
-$s3 = new Aws\S3\S3Client([
-    'version' => 'latest',
-    'region'  => 'us-west-2a'
-]);
 
-// Retrieve URL of uploaded files
+// S3 upload files
 $s3result = $s3->putObject([
     'ACL' => 'public-read',
-    'Bucket' => 'raw-vip',
+    'Bucket' => 'raw-sz',
     'Key' =>  basename($_FILES['userfile']['name']),
     'SourceFile' => $uploadfile
 ]);
 $url=$s3result['ObjectURL'];
-echo "</br>";
-echo "\n". "Hey! Your S3 Image URL: " . $url ."\n"; echo "</br>";
+echo "<br />\n";
+echo "<br />\n". "Hey! Your S3 Image URL: " . $url ."\n"; echo "<br />\n";
 
 //Insert the obtained user details from Submit page to DB
 $rdsclient = new Aws\Rds\RdsClient([
@@ -71,7 +73,7 @@ if (!($stmt = $link->prepare("INSERT INTO customers(id, email, phone, s3rawurl, 
     echo "Prepare failed: (" . $stmt->errno . ") " . $stmt->error; echo "</br>";
 }
 //store the data into variables
-$email=$_POST["email"];
+$email=$_POST["txtEmail"];
 $phone=$_POST["phone"];
 $finishedurl=' ';
 $status=0;

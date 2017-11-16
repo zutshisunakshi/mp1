@@ -17,12 +17,6 @@
 // Start the session
 session_start();
 
-require 'vendor/autoload.php';
-$s3 = new Aws\S3\S3Client([
-    'version' => 'latest',
-    'region'  => 'us-west-2a'
-]);
-
 echo "<h3>Your Input:</h3>";
 echo "Email ID : ".$_POST['txtEmail'];
 echo "<br />\n";
@@ -30,6 +24,13 @@ echo "Cell no. : ".$_POST['phone'];
 echo "<br />\n";
 echo "File Uploaded : ".$_POST['userfile'];
 echo "<br />\n";
+
+require 'vendor/autoload.php';
+$s3 = new Aws\S3\S3Client([
+    'version' => 'latest',
+    'region'  => 'us-west-2'
+]);
+
 $uploaddir = '/tmp/';
 $uploadfile = $uploaddir . basename($_FILES['userfile']['name']);
 

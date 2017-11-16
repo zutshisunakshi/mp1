@@ -40,15 +40,15 @@ function emailcheck(o) {
   <h2 align="center">Add image to your bucket form</h2>
   <p><span class="error">All are required fields</span></p>
   <form enctype="multipart/form-data" action="Status.php" method="POST">
-    <div>  Email ID <input type="text" onkeyup="emailcheck(this)" maxlength="50" name="txtEmail" placeholder="Enter email..."></div>
+  Email ID <input type="text" onkeyup="emailcheck(this)" maxlength="50" id="txtEmail" name="txtEmail" placeholder="Enter email...">
     <span id="error" style="display:none;color:red;">Wrong email</span>
       <br><br>
-    <div>  Cell no. <input type="text" maxlength="10" onkeyup="check(this)" name="phone" placeholder="Enter phone no..."></div>
+ Cell no. <input type="text" maxlength="10" onkeyup="check(this)" name="phone" placeholder="Enter phone no...">
       <br><br>
-    <div>
-      <input type="hidden" name="MAX_FILE_SIZE" value="3000000" /> <input name="userfile" type="file" /></div>
+
+<input type="hidden" name="MAX_FILE_SIZE" value="3000000" /> <input name="userfile" type="file" />
       <br><br>
-    <div>  <input class="btn btn-success btn-send" type="submit" name="submit" value="Submit"></div>
+<input class="btn btn-success btn-send" type="submit" name="submit" value="Submit">
 </div>
 
   <hr>

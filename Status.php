@@ -8,7 +8,7 @@
   <div class="container">
    <h2 align="center"><a href="Submit.php">Back to Submit Images</a></h2>
 
-   <div align="center"><img src="Status-page.png" alt="Status background animated" width="800" height="500" /></div>
+   <div align="center"><img src="Status-page.png" alt="Status background animated" width="400" height="400" /></div>
  </div>
 </body>
 </html>
@@ -16,8 +16,9 @@
 <?php
 // Start the session
 session_start();
-
-echo "<h3>Your Input:</h3>";
+if (isset($_POST['submit'])) {
+  
+echo "<h3>Your Inputs:</h3>";
 echo "Email ID : ".$_POST['txtEmail'];
 echo "<br />\n";
 echo "Cell no. : ".$_POST['phone'];
@@ -25,6 +26,13 @@ echo "<br />\n";
 echo "File Uploaded : ".$_POST['userfile'];
 echo "<br />\n";
 
+echo '<pre>';
+if (move_uploaded_file($_FILES['userfile']['tmp_name'], $uploadfile)) {
+    echo "File is valid, and was successfully uploaded.\n";
+} else {
+    echo "Possible file upload attack!\n";
+}
+}
 require 'vendor/autoload.php';
 $s3 = new Aws\S3\S3Client([
     'version' => 'latest',
@@ -34,12 +42,6 @@ $s3 = new Aws\S3\S3Client([
 $uploaddir = '/tmp/';
 $uploadfile = $uploaddir . basename($_FILES['userfile']['name']);
 
-echo '<pre>';
-if (move_uploaded_file($_FILES['userfile']['tmp_name'], $uploadfile)) {
-    echo "File is valid, and was successfully uploaded.\n";
-} else {
-    echo "Possible file upload attack!\n";
-}
 
 
 // S3 upload files

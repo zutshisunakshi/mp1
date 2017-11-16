@@ -5,7 +5,7 @@
 
 <?php
 session_start();
-$email = $_POST["email"];
+$email = $_POST["txtEmail"];
 echo $email;
 require 'vendor/autoload.php';
 
@@ -34,7 +34,7 @@ if (mysqli_connect_errno()) {
     exit();
 }
 
-$link->real_query("SELECT * FROM sz-customers WHERE email = '$email'");
+$link->real_query("SELECT * FROM customers WHERE email = '$email'");
 $res = $link->use_result();
 echo "Result set order...\n";
 while ($row = $res->fetch_assoc()) {

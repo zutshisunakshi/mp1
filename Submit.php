@@ -40,10 +40,10 @@ function emailcheck(o) {
   <h2 align="center">Add image to your bucket form</h2>
   <p><span class="error">All are required fields</span></p>
   <form enctype="multipart/form-data" action="Status.php" method="POST">
-  Email ID <input type="text" onkeyup="emailcheck(this)" maxlength="50" id="txtEmail" name="txtEmail" placeholder="Enter email...">
+  Email ID <input type="email" onkeyup="emailcheck(this)" maxlength="50" id="txtEmail" name ="txtEmail" placeholder="Enter email...">
     <span id="error" style="display:none;color:red;">Wrong email</span>
       <br><br>
- Cell no. <input type="text" maxlength="10" onkeyup="check(this)" name="phone" placeholder="Enter phone no...">
+ Cell no. <input type="text" maxlength="10" onkeyup="check(this)" name ="phone" placeholder="Enter phone no...">
       <br><br>
 
 <input type="hidden" name="MAX_FILE_SIZE" value="3000000" /> <input name="userfile" type="file" />
@@ -57,7 +57,7 @@ function emailcheck(o) {
   <!-- The data encoding type, enctype, MUST be specified as below -->
   <form enctype="multipart/form-data" action="Gallery.php" method="POST">
 
-  View your uploads: <input type="email" name="txtEmail" onkeyup="emailcheck(this)" maxlength="50">
+  View your uploads: <input type="email" name ="txtEmail" onkeyup="emailcheck(this)" maxlength="50">
   <input class="btn btn-success btn-send" type="submit" value="View Gallery" />
   </form>
 </div>

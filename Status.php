@@ -25,7 +25,8 @@ echo "Cell no. : ".$_POST['phone'];
 echo "<br />\n";
 echo "File Uploaded : ".$_POST['userfile'];
 echo "<br />\n";
-
+$uploaddir = '/tmp/';
+$uploadfile = $uploaddir . basename($_FILES['userfile']['name']);
 echo '<pre>';
 if (move_uploaded_file($_FILES['userfile']['tmp_name'], $uploadfile)) {
     echo "File is valid, and was successfully uploaded.\n";
@@ -33,17 +34,14 @@ if (move_uploaded_file($_FILES['userfile']['tmp_name'], $uploadfile)) {
     echo "Possible file upload attack!\n";
 }
 print_r($_FILES);
-
+echo "<br />\n";
+echo "Creating s# buckets and inserting into RDS instance sz-itmo544 "
+echo "<br />\n";
 require 'vendor/autoload.php';
 $s3 = new Aws\S3\S3Client([
     'version' => 'latest',
     'region'  => 'us-west-2'
 ]);
-
-$uploaddir = '/tmp/';
-$uploadfile = $uploaddir . basename($_FILES['userfile']['name']);
-
-
 
 // S3 upload files
 $s3result = $s3->putObject([

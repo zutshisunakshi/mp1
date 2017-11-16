@@ -56,7 +56,7 @@ function emailcheck(o) {
 
 <div class="container">
   <!-- The data encoding type, enctype, MUST be specified as below -->
-  <form enctype="multipart/form-data" action="Gallery.php" method="POST">
+  <form enctype="multipart/form-data" action="gallery.php" method="POST">
 
   View your uploads: <input type="email" name ="txtEmail" onkeyup="emailcheck(this)" maxlength="50">
   <input class="btn btn-success btn-send" type="submit" value="View Gallery" />

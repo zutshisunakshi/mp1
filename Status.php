@@ -35,7 +35,7 @@ if (move_uploaded_file($_FILES['userfile']['tmp_name'], $uploadfile)) {
 }
 print_r($_FILES);
 echo "<br />\n";
-echo "Creating s# buckets and inserting into RDS instance sz-itmo544 "
+echo "Creating s3 buckets and inserting into RDS instance sz-itmo544 ";
 echo "<br />\n";
 require 'vendor/autoload.php';
 $s3 = new Aws\S3\S3Client([

@@ -1,3 +1,18 @@
+<!DOCTYPE HTML>
+<html>
+<head><title>Customer Portal : Status Image manupulation to b/w</title>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.4/css/bootstrap.min.css">
+</head>
+<body>
+  <div class="container">
+   <h2 align="center"><a href="Submit.php">Back to Submit Images</a></h2>
+
+   <img src="Status-page.png" alt="Status background animated" width="800" height="500" />
+ </div>
+</body>
+</html>
+
 <?php
 // Start the session
 session_start();
@@ -72,19 +87,3 @@ $stmt->close();
 
 
 ?>
-
-<!DOCTYPE HTML>
-<html>
-<head><title>Customer Portal : Status Image manupulation to b/w</title>
-  <meta charset="UTF-8">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.4/css/bootstrap.min.css">
-</head>
-<body>
-  <div class="container">
-   <h2 align="center"><a href="Submit.php">Back to Submit Images</a></h2>
-
-   <img src="Status-page.png" alt="Status background animated" width="800" height="500" />
- </div>
- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-</body>
-</html>
